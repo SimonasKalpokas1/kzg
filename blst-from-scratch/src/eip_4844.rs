@@ -626,7 +626,10 @@ pub unsafe extern "C" fn load_trusted_setup(out: *mut CFsKzgSettings,
 /// This function should not be called before the horsemen are ready.
 #[no_mangle]
 pub unsafe extern "C" fn load_trusted_setup_file(out: *mut CFsKzgSettings, inp: *mut FILE) {
+    // let file = File::from_raw_handle(inp as i32);
+    
     let fd = fileno(inp);
+    // let mut file = File::from(fd as Handle);
     let p = CString::new(format!("/proc/self/fd/{}", fd)).unwrap();
     let path = p.as_ptr() as *const c_char;
 
