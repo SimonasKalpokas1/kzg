@@ -44,7 +44,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           cd blst-from-scratch
-          cp target/debug/blst_from_scatch.lib  export-test/c-kzg-4844/bindings/java/
+          cp target/debug/blst_from_scratch.lib  export-test/c-kzg-4844/bindings/java/
           cp our_windows_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
           
       - name: "[blst-from-scratch] prepare our library file on Unix"
