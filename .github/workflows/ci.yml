@@ -34,6 +34,7 @@ jobs:
 
       - name: "[blst-from-scratch] git clone ethereum c-kzg"
         run: |
+          cd blst-from-scratch
           mkdir export-test
           cd export-test
           git clone https://github.com/ethereum/c-kzg-4844.git
@@ -42,27 +43,20 @@ jobs:
       - name: "[blst-from-scratch] prepare our library file on Windows"
         if: matrix.os == 'windows-latest'
         run: |
+          cd blst-from-scratch
           cp target/debug/libblst_from_scratch.lib export-test/c-kzg-4844/bindings/java/
           cp our_windows_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
           
       - name: "[blst-from-scratch] prepare our library file on Unix"
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-11'
         run: |
-          echo "esu dabar"
-          pwd
-          ls
-          cd target
-          echo "target dabar"
-          ls
-          cd debug
-          echo "debug dabar"
-          ls
+          cd blst-from-scratch
           cp target/debug/libblst_from_scratch.a export-test/c-kzg-4844/bindings/java/
           cp our_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
 
       - name: "[blst-from-scratch] java tests"
         run: |
-          cd export-test/c-kzg-4844
+          cd blst-from-scratch/export-test/c-kzg-4844
           git submodule update --init
           cd src
           make blst
@@ -71,7 +65,7 @@ jobs:
 
       - name: "[blst-from-scratch] external library tests cleanup"
         run: |
-          cd ../../../..
+          cd blst-from-scratch
           rm -r export-test
 
 
