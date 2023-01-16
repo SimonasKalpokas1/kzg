@@ -54,6 +54,15 @@ jobs:
           cd blst-from-scratch
           cp target/debug/blst_from_scratch.lib  export-test/c-kzg-4844/bindings/java/
           cp our_windows_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
+          echo "LS IN BLST-FROM_SCRATCH"
+          ls
+          cd target
+          echo "LS IN TARGET"
+          ls
+          cd debug
+          echo "LS IN DEBUG"
+          ls
+          echo "LS PABAIGA"
           
       - name: "[blst-from-scratch] prepare our library file on Unix"
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-11'
