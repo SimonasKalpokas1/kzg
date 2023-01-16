@@ -629,6 +629,8 @@ pub unsafe extern "C" fn load_trusted_setup_file(out: *mut CFsKzgSettings, inp: 
     // let file = File::from_raw_handle(inp as i32);
     
     let fd = fileno(inp);
+    #[cfg(target_os = "windows")]
+    let mut file = File::from_raw_handle(fd as HANDLE);
     // let mut file = File::from(fd as Handle);
     let p = CString::new(format!("/proc/self/fd/{}", fd)).unwrap();
     let path = p.as_ptr() as *const c_char;
