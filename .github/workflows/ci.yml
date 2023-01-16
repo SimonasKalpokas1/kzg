@@ -57,7 +57,7 @@ jobs:
           cd target
           echo "LS IN TARGET"
           ls
-          cd debug
+          cd x86_64-pc-windows-msvc
           echo "LS IN DEBUG"
           ls
           echo "LS PABAIGA"
