@@ -27,10 +27,18 @@ jobs:
           distribution: "temurin"
           java-version: "11"
 
-      - name: "[blst-from-scratch] compile static library"
+      - name: "[blst-from-scratch] compile static library Windows"
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd blst-from-scratch
+          cargo rustc --crate-type=staticlib --target x86_64-pc-windows-gnu ?
+
+      - name: "[blst-from-scratch] compile static library Unix"
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-11'
         run: |
           cd blst-from-scratch
           cargo rustc  --crate-type=staticlib
+
 
       - name: "[blst-from-scratch] git clone ethereum c-kzg"
         run: |
