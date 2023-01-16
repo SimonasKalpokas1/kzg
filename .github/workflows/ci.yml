@@ -54,6 +54,7 @@ jobs:
           cp our_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
 
       - name: [blst-from-scratch] java tests
+        run: |
           cd export-test/c-kzg-4844
           git submodule update --init
           cd src
@@ -62,6 +63,7 @@ jobs:
           make
 
       - name: [blst-from-scratch] external library tests cleanup
+        run: |
           cd ../../../..
           rm -r export-test
 
