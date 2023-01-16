@@ -26,27 +26,43 @@ jobs:
           distribution: "temurin"
           java-version: "11"
 
-      - name: "[blst-from-scratch] as library export test"
-        run: |
-          cd blst-from-scratch
-          cargo rustc  --crate-type=staticlib
-          mkdir export-test
-          cd export-test
-          git clone https://github.com/ethereum/c-kzg-4844.git
-          cd ..
-          cp our_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
-          if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-11'
-            cp target/debug/libblst_from_scratch.a export-test/c-kzg-4844/bindings/java/
-          if matrix.os == 'windows-latest'
+        - name: "[blst-from-scratch] compile static library"
+          run: |
+            cd blst-from-scratch
+            cargo rustc  --crate-type=staticlib
+
+        - name: "[blst-from-scratch] git clone ethereum c-kzg"
+          run: |
+            cd blst-from-scratch
+            cargo rustc  --crate-type=staticlib
+            mkdir export-test
+            cd export-test
+            git clone https://github.com/ethereum/c-kzg-4844.git
+            cd ..
+
+        - name: [blst-from-scratch] prepare our library file on Windows
+          if: matrix.os == 'windows-latest'
+          run: |
             cp target/debug/libblst_from_scratch.lib export-test/c-kzg-4844/bindings/java/
-          cd export-test/c-kzg-4844
-          git submodule update --init
-          cd src
-          make blst
-          cd ../bindings/java
-          make
-          cd ../../../..
-          rm -r export-test
+            cp our_windows_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
+            
+        - name: [blst-from-scratch] prepare our library file on Windows
+          if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-11'
+          run: |
+            cp target/debug/libblst_from_scratch.a export-test/c-kzg-4844/bindings/java/
+            cp our_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
+
+        - name: [blst-from-scratch] java tests
+            cd export-test/c-kzg-4844
+            git submodule update --init
+            cd src
+            make blst
+            cd ../bindings/java
+            make
+
+        - name: [blst-from-scratch] external library tests cleanup
+            cd ../../../..
+            rm -r export-test
 
 
 
