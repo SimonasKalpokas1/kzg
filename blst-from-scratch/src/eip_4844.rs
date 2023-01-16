@@ -3,6 +3,11 @@ use std::ffi::{c_char, CString};
 use std::fs::File;
 use std::io::Read;
 
+#[cfg(target_os = "windows")]
+use std::os::windows::raw::HANDLE;
+#[cfg(target_os = "windows")]
+    use std::os::windows::io::FromRawHandle;
+
 use blst::{
     blst_p1, blst_p1_affine, blst_p1_compress, blst_p1_from_affine, blst_p1_uncompress, blst_p2,
     blst_p2_affine, blst_p2_from_affine, blst_p2_uncompress, BLST_ERROR, blst_fr, blst_scalar, blst_scalar_from_lendian, blst_scalar_fr_check,
