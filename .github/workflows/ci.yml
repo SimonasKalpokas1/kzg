@@ -34,8 +34,6 @@ jobs:
 
       - name: "[blst-from-scratch] git clone ethereum c-kzg"
         run: |
-          cd blst-from-scratch
-          cargo rustc  --crate-type=staticlib
           mkdir export-test
           cd export-test
           git clone https://github.com/ethereum/c-kzg-4844.git
@@ -47,7 +45,7 @@ jobs:
           cp target/debug/libblst_from_scratch.lib export-test/c-kzg-4844/bindings/java/
           cp our_windows_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
           
-      - name: "[blst-from-scratch] prepare our library file on Windows"
+      - name: "[blst-from-scratch] prepare our library file on Unix"
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-11'
         run: |
           cp target/debug/libblst_from_scratch.a export-test/c-kzg-4844/bindings/java/
