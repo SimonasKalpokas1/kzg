@@ -6,7 +6,7 @@ use std::io::Read;
 #[cfg(target_os = "windows")]
 use std::os::windows::raw::HANDLE;
 #[cfg(target_os = "windows")]
-    use std::os::windows::io::FromRawHandle;
+use std::os::windows::io::FromRawHandle;
 
 use blst::{
     blst_p1, blst_p1_affine, blst_p1_compress, blst_p1_from_affine, blst_p1_uncompress, blst_p2,
@@ -14,7 +14,10 @@ use blst::{
 };
 use kzg::{FFTSettings, Fr, KZGSettings, Poly, FFTG1, G1};
 
-use libc::{FILE, fileno, readlink};
+use libc::{FILE, fileno};
+#[cfg(target_family = "unix")]
+use libc::readlink;
+
 #[cfg(feature = "parallel")]
 use rayon::prelude::{IntoParallelRefIterator, ParallelIterator};
 #[cfg(feature = "parallel")]
@@ -640,17 +643,20 @@ pub unsafe extern "C" fn load_trusted_setup_file(out: *mut CFsKzgSettings, inp: 
     let p = CString::new(format!("/proc/self/fd/{}", fd)).unwrap();
     let path = p.as_ptr() as *const c_char;
 
-    let filename = [0i8; 4096].as_mut_ptr();
+    #[cfg(target_family = "unix")]
+    {
+        let filename = [0i8; 4096].as_mut_ptr();
 
-    let bytes_read = readlink(path, filename, 4096);
-    if bytes_read == -1 {
-        panic!("readlink failed");
-    }
-    let filename = String::from_utf8(std::slice::from_raw_parts(filename, bytes_read as usize)
-        .iter()
-        .map(|&c| c as u8).collect()).unwrap();
-    let settings = load_trusted_setup_file_rust(filename.as_str());
-    *out = kzg_settings_to_c(&settings);
+        let bytes_read = readlink(path, filename, 4096);
+        if bytes_read == -1 {
+            panic!("readlink failed");
+        }
+        let filename = String::from_utf8(std::slice::from_raw_parts(filename, bytes_read as usize)
+            .iter()
+            .map(|&c| c as u8).collect()).unwrap();
+        let settings = load_trusted_setup_file_rust(filename.as_str());
+        *out = kzg_settings_to_c(&settings);
+    };
 }
 
 #[no_mangle]
