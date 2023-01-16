@@ -51,20 +51,7 @@ jobs:
       - name: "[blst-from-scratch] prepare our library file on Windows"
         if: matrix.os == 'windows-latest'
         run: |
-          cd blst-from-scratch
-          echo "LS IN BLST-FROM_SCRATCH"
-          ls
-          cd target
-          echo "LS IN TARGET"
-          ls
-          cd x86_64-pc-windows-msvc
-          echo "LS IN X86-ETC"
-          ls
-          cd debug
-          echo "LS IN DEBUG"
-          ls
-          echo "LS PABAIGA"
-          cp target/debug/blst_from_scratch.lib  export-test/c-kzg-4844/bindings/java/
+          cp target/x86_64-pc-windows-msvc/debug/blst_from_scratch.lib  export-test/c-kzg-4844/bindings/java/
           cp our_windows_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
           
       - name: "[blst-from-scratch] prepare our library file on Unix"
