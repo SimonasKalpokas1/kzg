@@ -35,7 +35,10 @@ jobs:
           git clone https://github.com/ethereum/c-kzg-4844.git
           cd ..
           cp our_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
-          cp target/debug/libblst_from_scratch.a export-test/c-kzg-4844/bindings/java/
+          if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-11'
+            cp target/debug/libblst_from_scratch.a export-test/c-kzg-4844/bindings/java/
+          if matrix.os == 'windows-latest'
+            cp target/debug/libblst_from_scratch.lib export-test/c-kzg-4844/bindings/java/
           cd export-test/c-kzg-4844
           git submodule update --init
           cd src
