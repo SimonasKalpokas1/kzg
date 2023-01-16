@@ -31,7 +31,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           cd blst-from-scratch
-          cargo rustc --crate-type=staticlib --target x86_64-pc-windows-msvc
+          cargo rustc --crate-type=staticlib --target x86_64-pc-windows-gnu
 
       - name: "[blst-from-scratch] compile static library Unix"
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-11'
