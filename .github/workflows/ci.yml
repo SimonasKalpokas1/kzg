@@ -51,6 +51,7 @@ jobs:
       - name: "[blst-from-scratch] prepare our library file on Windows"
         if: matrix.os == 'windows-latest'
         run: |
+          cd blst-from-scratch
           cp target/x86_64-pc-windows-msvc/debug/blst_from_scratch.lib  export-test/c-kzg-4844/bindings/java/
           cp our_windows_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
           
