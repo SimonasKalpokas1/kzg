@@ -48,7 +48,7 @@ jobs:
       - name: "[blst-from-scratch] prepare our library file on Unix"
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-11'
         run: |
-          "esu dabar"
+          echo "esu dabar"
           pwd
           ls
           cd target
