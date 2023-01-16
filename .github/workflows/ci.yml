@@ -51,6 +51,7 @@ jobs:
       - name: "[blst-from-scratch] prepare our library file on Windows"
         if: matrix.os == 'windows-latest'
         run: |
+          cd blst-from-scratch
           echo "LS IN BLST-FROM_SCRATCH"
           ls
           cd target
@@ -60,7 +61,6 @@ jobs:
           echo "LS IN DEBUG"
           ls
           echo "LS PABAIGA"
-          cd blst-from-scratch
           cp target/debug/blst_from_scratch.lib  export-test/c-kzg-4844/bindings/java/
           cp our_windows_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
           
