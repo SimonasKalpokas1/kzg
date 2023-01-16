@@ -31,7 +31,6 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           cd blst-from-scratch
-        # rustup target add x86_64-pc-windows-gnu
           cargo rustc --crate-type=staticlib --target x86_64-pc-windows-msvc
 
       - name: "[blst-from-scratch] compile static library Unix"
