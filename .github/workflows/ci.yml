@@ -48,6 +48,15 @@ jobs:
       - name: "[blst-from-scratch] prepare our library file on Unix"
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-11'
         run: |
+          "esu dabar"
+          pwd
+          ls
+          cd target
+          echo "target dabar"
+          ls
+          cd debug
+          echo "debug dabar"
+          ls
           cp target/debug/libblst_from_scratch.a export-test/c-kzg-4844/bindings/java/
           cp our_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
 
