@@ -41,19 +41,19 @@ jobs:
           git clone https://github.com/ethereum/c-kzg-4844.git
           cd ..
 
-      - name: [blst-from-scratch] prepare our library file on Windows
+      - name: "[blst-from-scratch] prepare our library file on Windows"
         if: matrix.os == 'windows-latest'
         run: |
           cp target/debug/libblst_from_scratch.lib export-test/c-kzg-4844/bindings/java/
           cp our_windows_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
           
-      - name: [blst-from-scratch] prepare our library file on Windows
+      - name: "[blst-from-scratch] prepare our library file on Windows"
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-11'
         run: |
           cp target/debug/libblst_from_scratch.a export-test/c-kzg-4844/bindings/java/
           cp our_export_makefile export-test/c-kzg-4844/bindings/java/Makefile
 
-      - name: [blst-from-scratch] java tests
+      - name: "[blst-from-scratch] java tests"
         run: |
           cd export-test/c-kzg-4844
           git submodule update --init
@@ -62,7 +62,7 @@ jobs:
           cd ../bindings/java
           make
 
-      - name: [blst-from-scratch] external library tests cleanup
+      - name: "[blst-from-scratch] external library tests cleanup"
         run: |
           cd ../../../..
           rm -r export-test
